@@ -1,4 +1,5 @@
 const axios = require("axios");
+
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
 const request = (endpoint, requestObj) => {
@@ -9,8 +10,8 @@ const request = (endpoint, requestObj) => {
         url: `https://api.paymongo.com/${process.env.PAYMONGO_VERSION}/${endpoint}`,
         method: requestObj.method || "POST",
         data: { data: { attributes: requestObj.body } }
-    }).catch( err => console.log({
-        headers : err.response.headers,
+    }).catch(err => console.log({
+        headers: err.response.headers,
         errors: err.response.data.errors
     }));
 }
@@ -21,23 +22,23 @@ class PaymentIntent {
 
     create(attributes) {
         return request(this.api_endpoint, {
-            body : attributes, 
-            key : process.env.PAYMONGO_PUBLIC_KEY
+            body: attributes,
+            key: process.env.PAYMONGO_PUBLIC_KEY
         });
     }
 
     retrieve(intentId, attributes) {
         return request(`${this.api_endpoint}/${intentId}`, {
             method: "GET",
-            body : attributes, 
-            key : process.env.PAYMONGO_PUBLIC_KEY
+            body: attributes,
+            key: process.env.PAYMONGO_PUBLIC_KEY
         });
     }
 
     attachPaymentMethod(intentId, attributes) {
         return request(`${this.api_endpoint}/${intentId}`, {
-            body : attributes, 
-            key : process.env.PAYMONGO_SECRET_KEY
+            body: attributes,
+            key: process.env.PAYMONGO_SECRET_KEY
         });
     }
 }
@@ -48,16 +49,16 @@ class PaymentMethod {
 
     create(attributes) {
         return request(`${this.api_endpoint}`, {
-            body : attributes, 
-            key : process.env.PAYMONGO_SECRET_KEY
+            body: attributes,
+            key: process.env.PAYMONGO_SECRET_KEY
         });
     }
 
     retrieve(methodId, attributes) {
         return request(`${this.api_endpoint}/${methodId}`, {
-            method:"GET",
-            body : attributes, 
-            key : process.env.PAYMONGO_PUBLIC_KEY,
+            method: "GET",
+            body: attributes,
+            key: process.env.PAYMONGO_PUBLIC_KEY,
         });
     }
 }
@@ -68,21 +69,25 @@ class Payments {
 
     create(attributes) {
         return request(`${this.api_endpoint}`, {
-            body : attributes, 
-            key : process.env.PAYMONGO_SECRET_KEY
+            body: attributes,
+            key: process.env.PAYMONGO_SECRET_KEY
         });
     }
 
     retrieve(paymentId) {
         return request(`${this.api_endpoint}/${paymentId}`, {
-            method:"GET",
-            body : attributes, 
-            key : process.env.PAYMONGO_PUBLIC_KEY,
+            method: "GET",
+            body: attributes,
+            key: process.env.PAYMONGO_PUBLIC_KEY,
         });
     }
 
-    list() {
-//        return request(`${this.api_endpoint}`, {});
+    list(params) {
+        return request(`${this.api_endpoint}?${parms}`, {
+            method: "GET",
+            body: null,
+            key: process.env.PAYMONGO_PUBLIC_KEY
+        });
     }
 }
 
@@ -92,20 +97,21 @@ class Source {
 
     create(attributes) {
         return request(`${this.api_endpoint}`, {
-            body : attributes, 
-            key : process.env.PAYMONGO_PUBLIC_KEY
+            body: attributes,
+            key: process.env.PAYMONGO_PUBLIC_KEY
         });
     }
     retrieve(sourceId) {
         return request(`${this.api_endpoint}/${sourceId}`, {
-            method:"GET",
-            body : attributes, 
-            key : process.env.PAYMONGO_PUBLIC_KEY
+            method: "GET",
+            body: attributes,
+            key: process.env.PAYMONGO_PUBLIC_KEY
         });
     }
 }
 
 class Paymongo {
+
     PaymentIntent = new PaymentIntent();
 
     PaymentMethod = new PaymentMethod();
