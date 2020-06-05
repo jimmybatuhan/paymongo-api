@@ -110,7 +110,52 @@ class Source {
     }
 }
 
+class Webhook {
+
+    api_endpoint = `webhooks`;
+
+    create(id, events = 'source.chargeable') {
+        return request(`${this.api_endpoint}`, {
+            body: { id: id, events: events },
+            key: process.env.PAYMONGO_SECRET_KEY
+        })
+    }
+
+    list() {
+        return request(`${this.api_endpoint}`, {
+            method: "GET",
+            body: {},
+            key: process.env.PAYMONGO_SECRET_KEY
+        })
+    }
+
+    retrieve(id) {
+        return request(`${this.api_endpoint}/${id}`, {
+            method: "GET",
+            body: {},
+            key: process.env.PAYMONGO_SECRET_KEY
+        })
+    }
+
+    disable(id) {
+        return request(`${this.api_endpoint}/${id}/disable`, {
+            body: {},
+            key: process.env.PAYMONGO_SECRET_KEY
+        })
+    }
+
+    enable() {
+        return request(`${this.api_endpoint}/${id}/enable`, {
+            body: {},
+            key: process.env.PAYMONGO_SECRET_KEY
+        })
+    }
+
+}
+
 class Paymongo {
+
+    Webhook = new Webhook();
 
     PaymentIntent = new PaymentIntent();
 
@@ -121,4 +166,4 @@ class Paymongo {
     Source = new Source();
 }
 
-module.exports.paymongo = new Paymongo();
+module.exports = new Paymongo();
