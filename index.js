@@ -1,44 +1,118 @@
 const axios = require("axios");
+axios.defaults.headers.common["Content-Type"] = "application/json";
 
-const paymongoAPI = (url, key, body) => {
-    return axios.post(url, JSON.stringify({ data: { attributes: { body } } }), {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authentication": `Basic ${key}`
-        }
-    }).catch((error) => {
+const request = (endpoint, requestObj) => {
 
-        console.log(error.message);
+    axios.defaults.headers.common["Authorization"] = `Basic ${requestObj.key}`;
 
-        //Request has been made but no response recivied
-        if(error.request){
-            
-        }
-    });
+    return axios({
+        url: `https://api.paymongo.com/${process.env.PAYMONGO_VERSION}/${endpoint}`,
+        method: requestObj.method || "POST",
+        data: { data: { attributes: requestObj.body } }
+    }).catch( err => console.log({
+        headers : err.response.headers,
+        errors: err.response.data.errors
+    }));
 }
 
-const createIntent = (key, attributes) => {
-    return paymongoAPI(`https://api.paymongo.com/v1/payment_intents`, key, attributes);
-}
-const attachPaymentMethodToIntent = (IntentId, key, attributes) => {
-    return paymongoAPI(`https://api.paymongo.com/v1/payment_intents/${IntentId}/attach`, key, attributes);
+class PaymentIntent {
+
+    api_endpoint = `payment_intents`;
+
+    create(attributes) {
+        return request(this.api_endpoint, {
+            body : attributes, 
+            key : process.env.PAYMONGO_PUBLIC_KEY
+        });
+    }
+
+    retrieve(intentId, attributes) {
+        return request(`${this.api_endpoint}/${intentId}`, {
+            method: "GET",
+            body : attributes, 
+            key : process.env.PAYMONGO_PUBLIC_KEY
+        });
+    }
+
+    attachPaymentMethod(intentId, attributes) {
+        return request(`${this.api_endpoint}/${intentId}`, {
+            body : attributes, 
+            key : process.env.PAYMONGO_SECRET_KEY
+        });
+    }
 }
 
-const createdPaymentMethod = (key, attributes) => {
-    return paymongoAPI(`https://api.paymongo.com/v1/payment_methods`, key, attributes);
+class PaymentMethod {
+
+    api_endpoint = `payment_methods`;
+
+    create(attributes) {
+        return request(`${this.api_endpoint}`, {
+            body : attributes, 
+            key : process.env.PAYMONGO_SECRET_KEY
+        });
+    }
+
+    retrieve(methodId, attributes) {
+        return request(`${this.api_endpoint}/${methodId}`, {
+            method:"GET",
+            body : attributes, 
+            key : process.env.PAYMONGO_PUBLIC_KEY,
+        });
+    }
 }
 
-const createSource = (key, attributes) => {
-    return paymongoAPI(`https://api.paymongo.com/v1/sources`, key, attributes);
+class Payments {
+
+    api_endpoint = 'payments';
+
+    create(attributes) {
+        return request(`${this.api_endpoint}`, {
+            body : attributes, 
+            key : process.env.PAYMONGO_SECRET_KEY
+        });
+    }
+
+    retrieve(paymentId) {
+        return request(`${this.api_endpoint}/${paymentId}`, {
+            method:"GET",
+            body : attributes, 
+            key : process.env.PAYMONGO_PUBLIC_KEY,
+        });
+    }
+
+    list() {
+//        return request(`${this.api_endpoint}`, {});
+    }
 }
 
-const paySource = (key, attributes) => {
-    return paymongoAPI(`https://api.paymongo.com/v1/payments`, key, attributes);
+class Source {
+
+    api_endpoint = "sources";
+
+    create(attributes) {
+        return request(`${this.api_endpoint}`, {
+            body : attributes, 
+            key : process.env.PAYMONGO_PUBLIC_KEY
+        });
+    }
+    retrieve(sourceId) {
+        return request(`${this.api_endpoint}/${sourceId}`, {
+            method:"GET",
+            body : attributes, 
+            key : process.env.PAYMONGO_PUBLIC_KEY
+        });
+    }
 }
 
-module.exports.createIntent = createIntent;
-module.exports.attachPaymentMethodToIntent = attachPaymentMethodToIntent;
-module.exports.createdPaymentMethod = createdPaymentMethod;
-module.exports.createSource = createSource;
-module.exports.paySource = paySource;
+class Paymongo {
+    PaymentIntent = new PaymentIntent();
+
+    PaymentMethod = new PaymentMethod();
+
+    Payments = new Payments();
+
+    Source = new Source();
+}
+
+module.exports.paymongo = new Paymongo();
