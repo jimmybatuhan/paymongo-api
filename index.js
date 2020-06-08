@@ -10,8 +10,6 @@ const request = (endpoint, requestObj) => {
         url: `https://api.paymongo.com/${process.env.PAYMONGO_VERSION}/${endpoint}`,
         method: requestObj.method || "POST",
         data: { data: { attributes: requestObj.body || {} } }
-    }).catch(err => {
-        if(err) throw err;
     });
 }
 
