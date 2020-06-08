@@ -106,9 +106,9 @@ class Webhook {
 
     api_endpoint = `webhooks`;
 
-    create(id, events = 'source.chargeable') {
+    create(url, events = 'source.chargeable') {
         return request(`${this.api_endpoint}`, {
-            body: { id: id, events: events },
+            body: { url: url, events: events },
             key: process.env.PAYMONGO_SECRET_KEY
         })
     }
