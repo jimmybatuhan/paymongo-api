@@ -11,7 +11,7 @@ npm install paymongo-api-client
 ## Environment Variables
 following variables have to be declared in your application environment ```.env```
 ```
-PAYMONGO_VERSION=v1 
+PAYMONGO_VERSION=v1
 PAYMONGO_PUBLIC_KEY=<ACCOUNT API PUBLIC KEY>
 PAYMONGO_SECRET_KEY=<ACCOUNT SECRET KEY>
 ```
@@ -53,12 +53,11 @@ PAYMONGO_SECRET_KEY=<ACCOUNT SECRET KEY>
 ###### The ```attributes``` nedded to create **Payment** are documented [here](https://developers.paymongo.com/reference#create-a-payment)
 
 ##### Retrieving a Payment
-```paymongo.Payment.retrive(paymentId)``` 
+```paymongo.Payment.retrive(paymentId)```
 
 ##### Retrieving a list of Payments
 ```paymongo.Payment.list(params)```
 ###### The ```params``` nedded to get a list of **Payments** are documented [here](https://developers.paymongo.com/reference#list-all-payments)
-
 
 ### Source
 ##### A ```Source``` is a resource to generate your customer's payment instrument. This is normally used to generate check out URLs for e-wallet payments.
@@ -69,7 +68,6 @@ PAYMONGO_SECRET_KEY=<ACCOUNT SECRET KEY>
 
 ##### Retrieving a Source
 ```paymongo.Source.retrive(sourceId)```
-
 
 ### Webhook
 ##### A ```Webhook``` resource primarily refers to a certain URL where we send events that are happening from your account.
@@ -90,3 +88,7 @@ PAYMONGO_SECRET_KEY=<ACCOUNT SECRET KEY>
 
 ##### Disable a Webhook
 ```paymongo.Webhook.disable(webhookid)```
+
+##### Update a Webhook
+```paymongo.Webhook.update(webhookid, atributes)```
+###### The ```attributes``` nedded to update **Webhook** are documented [here](https://developers.paymongo.com/reference#update-a-webhook)
