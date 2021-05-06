@@ -1,6 +1,6 @@
 {
   "name": "paymongo-api-client",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Paymongo API Integration",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,13 @@
     "paymongo",
     "paymongo-api"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimmybatuhan/paymongo-api.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/jimmybatuhan/paymongo-api#readme",
   "author": "Jimmy B. Batuhan Jr.",
-  "license": "ISC",
   "dependencies": {
     "axios": ">=0.21.1"
   }
