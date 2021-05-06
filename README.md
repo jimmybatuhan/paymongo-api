@@ -8,21 +8,21 @@ A lightweight client-side API Integration for Paymongo.
 npm install paymongo-api-client
 ```
 ## Environment Variables
-Must have the following variables declared in your application environment 
+Must have the following variables declared in your application environment (.env)
 
 ```php
 #Paymongo version to use
-PAYMONGO_VERSION
+PAYMONGO_VERSION=
 
 #Your account's Public Key
-PAYMONGO_PUBLIC_KEY
+PAYMONGO_PUBLIC_KEY=
 
 #You account's Secret Key
 
-PAYMONGO_SECRET_KEY
+PAYMONGO_SECRET_KEY=
 
 #Tells the package where this is test or live
-PAYMONGO_ENV
+PAYMONGO_ENV=
 ```
 
 ## Usage
@@ -47,26 +47,26 @@ paymongo.PaymentMethod.retrive(methodId) # retrieve a payment method
 ```python
 import paymongo from 'paymongo-api-client'
 
-paymongo.Payment.create(attributes) # create a payment method 
-paymongo.Payment.retrive(paymentId) # retrieve a payment method 
-paymongo.Payment.list(params) # retrieve a payment method 
+paymongo.Payment.create(attributes) # create a payment 
+paymongo.Payment.retrive(paymentId) # retrieve a payment 
+paymongo.Payment.list(params) # retrieves a list of payments 
 ```
 ### Source
 
 ```python
 import paymongo from 'paymongo-api-client'
 
-paymongo.Source.create(attributes) # create a payment method 
-paymongo.Source.retrive(sourceId) # retrieve a payment method 
+paymongo.Source.create(attributes) # create a source 
+paymongo.Source.retrive(sourceId) # retrieve a source 
 ```
 ### Webhook
 
 ```python
 import paymongo from 'paymongo-api-client'
 
-paymongo.Webhook.create(attributes) # create a payment method 
-paymongo.Webhook.retrive(sourceId) # retrieve a payment method 
-paymongo.Webhook.list(attributes) # create a payment method 
-paymongo.Webhook.enable(sourceId) # retrieve a payment method 
-paymongo.Webhook.disable(sourceId) # retrieve a payment method 
+paymongo.Webhook.create(attributes) # create a webhook
+paymongo.Webhook.retrive(sourceId) # retrieve a webhook 
+paymongo.Webhook.list(attributes) # list a webhook 
+paymongo.Webhook.enable(sourceId) # enables a webhook via source id 
+paymongo.Webhook.disable(sourceId) # disables a webhook via source id
 ```
