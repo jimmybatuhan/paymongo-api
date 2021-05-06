@@ -8,7 +8,7 @@ A lightweight client-side API Integration for Paymongo.
 npm install paymongo-api-client
 ```
 ## Environment Variables
-Must have the following variables declared in your application environment (.env)
+Must have the following variables declared in your application environment ```(.env)```
 
 ```php
 #Paymongo version to use
