@@ -45,7 +45,7 @@ PAYMONGO_SECRET_KEY=<ACCOUNT SECRET KEY>
 ```paymongo.PaymentIntent.attachPaymentMethod(intentId, attributes)```
 ###### The ```attributes``` nedded to complete attaching a **Payment Method** to a **Payment Intent** are documented [here](https://developers.paymongo.com/reference#attach-to-paymentintent)
 
-### Payment
+## Payment
 ##### A ```Payment``` resource is an attempt by your customer to send you money in exchange for your product. This is a reference to an amount that you are expecting to receive if a payment resource with paid status becomes a part of a payout. If the payment status is failed, you can determine the reason for failure.
 
 ##### Creating a Payment
@@ -59,7 +59,7 @@ PAYMONGO_SECRET_KEY=<ACCOUNT SECRET KEY>
 ```paymongo.Payment.list(params)```
 ###### The ```params``` nedded to get a list of **Payments** are documented [here](https://developers.paymongo.com/reference#list-all-payments)
 
-### Source
+## Source
 ##### A ```Source``` is a resource to generate your customer's payment instrument. This is normally used to generate check out URLs for e-wallet payments.
 
 ##### Creating a Source
@@ -69,7 +69,7 @@ PAYMONGO_SECRET_KEY=<ACCOUNT SECRET KEY>
 ##### Retrieving a Source
 ```paymongo.Source.retrive(sourceId)```
 
-### Webhook
+## Webhook
 ##### A ```Webhook``` resource primarily refers to a certain URL where we send events that are happening from your account.
 
 ##### Creating a Webhook
